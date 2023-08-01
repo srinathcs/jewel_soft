@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.sgs.jewelsoft.fragment.HomeFragment"
+        android:label="Dash board"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/entryFragment"
+        android:name="com.sgs.jewelsoft.fragment.EntryFragment"
+        android:label="Entry Fragment" />
+
+    <fragment
+        android:id="@+id/viewReceiptFragment"
+        android:name="com.sgs.jewelsoft.fragment.ViewReceiptFragment"
+        android:label="View Receipt Fragment" />
+
+    <fragment
+        android:id="@+id/entryReceiptFragment"
+        android:name="com.sgs.jewelsoft.fragment.ReceiptEntryFragment"
+        android:label="Receipt Entry" />
+
+</navigation>

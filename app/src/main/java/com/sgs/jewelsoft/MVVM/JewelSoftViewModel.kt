@@ -1,11 +1,13 @@
 package com.sgs.jewelsoft.MVVM
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgs.jewelsoft.Resources
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.security.cert.CertPathValidatorException.Reason
 
 class JewelSoftViewModel(private val jewelSoftRepo: JewelSoftRepository) : ViewModel() {
     private val testLogin = MutableStateFlow<Resources<Login>>(Resources.Loading())
@@ -132,16 +134,16 @@ class JewelSoftViewModel(private val jewelSoftRepo: JewelSoftRepository) : ViewM
     }
 
     private val balanceName =
-        MutableStateFlow<Resources<List<AutoFillName>>>(Resources.Loading())
-    val balanceShow: StateFlow<Resources<List<AutoFillName>>>
+        MutableStateFlow<Resources<List<Balance>>>(Resources.Loading())
+    val balanceShow: StateFlow<Resources<List<Balance>>>
         get() = balanceName
 
     suspend fun balance(
-        sub_type: String, type: String, cid: String, name: String
+        sub_type: String, type: String, cid: String, name: String, chit: String
     ) = viewModelScope.launch {
         try {
             val resources = jewelSoftRepo.balance(
-                sub_type, type, cid, name
+                sub_type, type, cid, name, chit
             )
             balanceName.value = Resources.Success(resources)
         } catch (exception: Exception) {
@@ -149,6 +151,64 @@ class JewelSoftViewModel(private val jewelSoftRepo: JewelSoftRepository) : ViewM
         }
     }
 
+    private val viewReceipt = MutableStateFlow<Resources<List<ViewReceipt>>>(Resources.Loading())
+    val viewReceiptShow: StateFlow<Resources<List<ViewReceipt>>> = viewReceipt
+
+    suspend fun viewReceipt(
+        type: String,
+        cid: String
+    ) = viewModelScope.launch {
+        try {
+            val resources = jewelSoftRepo.viewReceipt(
+                type, cid
+            )
+            viewReceipt.value = Resources.Success(resources)
+        } catch (exception: Exception) {
+            viewReceipt.value = Resources.Error(exception.message.toString())
+        }
+    }
+
+    private val saveReceipt = MutableStateFlow<Resources<Login>>(Resources.Loading())
+    val saveReceiptFlow: StateFlow<Resources<Login>> = saveReceipt
+
+    suspend fun saveReceipt(
+        type: String,
+        cid: String,
+        uid: String,
+        date: String,
+        lname: String,
+        name: String,
+        chit_id: String,
+        balance: String,
+        ptype: String,
+        remark: String,
+        account: String,
+        total_due: String,
+        total_metal: String,
+        total: String
+    ) = viewModelScope.launch {
+        try {
+            val resources = jewelSoftRepo.saveDateReceipt(
+                type,
+                cid,
+                uid,
+                date,
+                lname,
+                name,
+                chit_id,
+                balance,
+                ptype,
+                remark,
+                account,
+                total_due,
+                total_metal,
+                total,
+            )
+            saveReceipt.value = Resources.Success(resources)
+        } catch (exception: Exception) {
+            saveReceipt.value = Resources.Error(exception.message.toString())
+        }
+    }
 
 
 }

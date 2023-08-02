@@ -1,5 +1,7 @@
 package com.sgs.jewelsoft.MVVM
 
+import retrofit2.http.Field
+
 class JewelSoftRepository {
 
     suspend fun login(
@@ -56,17 +58,38 @@ class JewelSoftRepository {
 
     suspend fun autoFillName(
         sub_type: String,
-        type : String,
+        type: String,
         cid: String,
         name: String
-    ) = Retrofit.api.AutoFillName(sub_type,type, cid, name)
+    ) = Retrofit.api.AutoFillName(sub_type, type, cid, name)
 
     suspend fun balance(
         sub_type: String,
-        type : String,
+        type: String,
         cid: String,
-        name: String
-    ) = Retrofit.api.balance(sub_type,type, cid, name)
+        name: String,
+        chit: String,
+    ) = Retrofit.api.balance(sub_type, type, cid, name,chit)
 
+    suspend fun viewReceipt(
+        type: String,
+        cid: String
+    ) = Retrofit.api.viewReceipt(type, cid)
 
+    suspend fun saveDateReceipt(
+        type: String,
+        cid: String,
+        uid: String,
+        date: String,
+        lname: String,
+        name: String,
+        chit_id: String,
+        balance: String,
+        ptype: String,
+        remark: String,
+        account: String,
+        total_due: String,
+        total_metal: String,
+        total:String
+    ) = Retrofit.api.saveData(type,cid, uid, date, lname,name, chit_id, balance, ptype, remark, account, total_due, total_metal,total)
 }

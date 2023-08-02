@@ -18,11 +18,15 @@
     <fragment
         android:id="@+id/viewReceiptFragment"
         android:name="com.sgs.jewelsoft.fragment.ViewReceiptFragment"
-        android:label="View Receipt Fragment" />
+        android:label="View Receipt" />
 
     <fragment
         android:id="@+id/entryReceiptFragment"
         android:name="com.sgs.jewelsoft.fragment.ReceiptEntryFragment"
         android:label="Receipt Entry" />
 
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.sgs.jewelsoft.fragment.ReportFragment"
+        android:label="Report" />
 </navigation>

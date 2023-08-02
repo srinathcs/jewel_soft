@@ -9,11 +9,11 @@
         android:title="Entry Receipt" />
 
     <item
-        android:id="@+id/setting"
-        android:title="Settings" />
+        android:id="@+id/viewReceiptFragment"
+        android:title="View Receipt" />
 
     <item
-        android:id="@+id/statement"
-        android:title="Statement" />
+        android:id="@+id/reportFragment"
+        android:title="Report" />
 
 </menu>

@@ -1,6 +1,5 @@
 package com.sgs.jewelsoft.MVVM
 
-import java.util.Date
 
 data class Login(
     val uid: String,
@@ -38,20 +37,38 @@ data class AccountType(
     val name: String,
     val value: String,
     val chit_id: String,
+    val id: String,
+    val label: String,
 )
 
 data class AutoFillName(
     val label: String,
     val value: String,
+    val id: String,
     val chit_id: String,
     val balance: String,
 )
 
-data class SaveData(
+data class Rate(
+    val act: Any,
+    val aid: String,
+    val bid: String,
     val cid: String,
-    val type: String,
-    val sub_type: String
+    val date: String,
+    val del: String,
+    val dtime: String,
+    val id: String,
+    val is_d: String,
+    val metal: String,
+    val purity: String,
+    val rate: String,
+    val uid: String
 )
+
+data class Balance (
+    val balance: String,
+    val rate: List<Rate>
+        )
 
 data class ViewReceipt(
 
@@ -64,5 +81,9 @@ data class ViewReceipt(
     val account: String,
     val remark: String,
     val chit_id: String
+)
 
+data class SaveData(
+    val error: Boolean,
+    val error_msg: String,
 )

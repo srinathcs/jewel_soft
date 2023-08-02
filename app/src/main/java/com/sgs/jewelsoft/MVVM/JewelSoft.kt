@@ -72,16 +72,34 @@ interface JewelSoft {
         @Field("sub_type") sub_type: String,
         @Field("type") type: String,
         @Field("cid") cid: String,
-        @Field("name") name: String
-    ): List<AutoFillName>
+        @Field("name") name: String,
+        @Field("chit") chit: String,
+    ): List<Balance>
 
     @FormUrlEncoded
     @POST("jewel_index.php")
     suspend fun saveData(
-        @Field("sub_type") sub_type: String,
         @Field("type") type: String,
         @Field("cid") cid: String,
+        @Field("uid") uid: String,
+        @Field("date") date: String,
+        @Field("lname") lname: String,
+        @Field("name") name: String,
+        @Field("chit_id") chit_id: String,
+        @Field("balance") balance: String,
+        @Field("ptype") ptype: String,
+        @Field("remark") remark: String,
+        @Field("account") account: String,
+        @Field("total_due") total_due: String,
+        @Field("total_metal") total_metal: String,
+        @Field("total")total:String,
+    ): Login
 
-    ): List<AutoFillName>
+    @FormUrlEncoded
+    @POST("jewel_index.php")
+    suspend fun viewReceipt(
+        @Field("type") type: String,
+        @Field("cid") cid: String
+    ): List<ViewReceipt>
 
 }

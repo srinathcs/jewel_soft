@@ -37,6 +37,9 @@ class HomeFragment : Fragment() {
         binding.cvViewEntryReceipt.setOnClickListener {
             findNavController().navigate(R.id.entryReceiptFragment)
         }
+        binding.cvViewReceipt.setOnClickListener {
+            findNavController().navigate(R.id.viewReceiptFragment)
+        }
         return binding.root
     }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +21,7 @@ import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.databinding.FragmentRecepitEntryBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -27,7 +29,9 @@ class ReceiptEntryFragment : Fragment() {
     private lateinit var binding: FragmentRecepitEntryBinding
     private lateinit var jewelSoftVM: JewelSoftViewModel
     private lateinit var mainPreference: MainPreference
-    private var id = ""
+    private var payId = ""
+    private var accId = ""
+    private var receiptId = ""
     private var paymentType: MutableList<String> = mutableListOf()
     private var paymentList: MutableList<String> = mutableListOf()
     private var nameList: MutableList<String> = mutableListOf()
@@ -42,27 +46,95 @@ class ReceiptEntryFragment : Fragment() {
     private var customerValues: MutableList<String> = mutableListOf()
     private var customerChitId: MutableList<String> = mutableListOf()
 
+    private var currentDate = ""
+    private var purity = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         mainPreference = MainPreference(requireContext())
         binding = FragmentRecepitEntryBinding.inflate(inflater, container, false)
+
         val currentCalender = Calendar.getInstance()
-        val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = simpleDateFormat.format(currentCalender.time)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        currentDate = simpleDateFormat.format(currentCalender.time)
         binding.tvDate.text = currentDate
 
         receiptType()
         paymentType()
         accountType()
         cusName()
-
+        binding.btnSave.setOnClickListener {
+            saveData()
+        }
         val repos = JewelSoftRepository()
         val factory = JewelViewModelFactory(repos)
         jewelSoftVM = ViewModelProvider(this, factory)[JewelSoftViewModel::class.java]
         return binding.root
 
+    }
+
+    private fun saveData() {
+        lifecycleScope.launchWhenStarted {
+            jewelSoftVM.saveReceipt(
+                "3",
+                mainPreference.getCid().first(),
+                mainPreference.getUserId().first(),
+                currentDate,
+                binding.atvName.text.toString(),
+                customerNameId,
+                binding.atvChitID.text.toString(),
+                binding.atvBalance.text.toString(),
+                payId,
+                binding.etRemark.text.toString(),
+                accId,
+                "",
+                purity,
+                binding.etAmount.text.toString()
+            )
+        }
+        saveRecepit()
+    }
+
+    private fun saveRecepit() {
+        lifecycleScope.launchWhenStarted {
+            jewelSoftVM.saveReceiptFlow.collect {
+                when (it) {
+                    is Resources.Loading -> {
+
+                    }
+
+                    is Resources.Error -> {
+                        Log.i("TAG", "saveErrorRecepit:${it.message.toString()}")
+                    }
+
+                    is Resources.Success -> {
+                        Log.i("TAG", "validationSuccess: ${it.data}")
+                        if (it.data!!.error == false) {
+                            binding.atvName.setText("")
+                            binding.atvChitID.setText("")
+                            binding.atvAccount.setText("")
+                            binding.atvBalance.setText("")
+                            binding.atvReceiptType.setText("")
+                            binding.atvPaymentType.setText("")
+                            binding.etAmount.setText("")
+                            binding.etRemark.setText("")
+                            Toast.makeText(
+                                requireContext(),
+                                "Data Added Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                requireContext(), "Data is not added", Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun accountType() {
@@ -96,7 +168,7 @@ class ReceiptEntryFragment : Fragment() {
                             valueList.clear()
                             for (i in it.data!!) {
                                 accList.add(i.name)
-                                valueList.add(i.value)
+                                valueList.add(i.id)
                             }
                             val arrayAdapter = ArrayAdapter(
                                 requireContext(),
@@ -115,8 +187,8 @@ class ReceiptEntryFragment : Fragment() {
             for (i in 0 until nameList.size) {
                 try {
                     if (binding.atvAccount.text.toString() == accList[i]) {
-                        id = valueList[i]
-                        Log.i("TAG", "forsalessss:$id")
+                        accId = valueList[i]
+                        Log.i("TAG", "atvAccount:$accId")
                     }
                 } catch (e: IndexOutOfBoundsException) {
                     e.printStackTrace()
@@ -175,7 +247,7 @@ class ReceiptEntryFragment : Fragment() {
             for (i in 0 until paymentType.size) {
                 try {
                     if (binding.atvPaymentType.text.toString() == paymentType[i]) {
-                        id = paymentList[i]
+                        payId = paymentList[i]
                         Log.i("TAG", "forsalessss:$id")
                     }
                 } catch (e: IndexOutOfBoundsException) {
@@ -237,7 +309,7 @@ class ReceiptEntryFragment : Fragment() {
             for (i in 0 until nameList.size) {
                 try {
                     if (binding.atvReceiptType.text.toString() == nameList[i]) {
-                        id = idList[i]
+                        receiptId = idList[i]
                         Log.i("TAG", "forsalessss:$id")
                     }
                 } catch (e: IndexOutOfBoundsException) {
@@ -248,7 +320,7 @@ class ReceiptEntryFragment : Fragment() {
     }
 
     private fun cusName() {
-        binding.atvName.doOnTextChanged { text, _, _, _ ->
+        binding.atvChitID.doOnTextChanged { text, _, _, _ ->
             lifecycleScope.launchWhenStarted {
                 jewelSoftVM.autoFillName(
                     "1",
@@ -282,32 +354,34 @@ class ReceiptEntryFragment : Fragment() {
                         customerChitId.clear()
 
                         for (i in it.data!!) {
-                            customerName.add(i.label)
-                            customerValues.add(i.value)
-                            customerChitId.add(i.chit_id)
+                            customerName.add(i.chit_id)
+                            customerValues.add(i.id)
+                            customerChitId.add(i.label)
                         }
                         val arrayAdapter = ArrayAdapter(
                             requireContext(),
                             R.layout.complete_text_view, customerName
                         )
-                        binding.atvName.setAdapter(arrayAdapter)
-                        binding.atvName.threshold = 1
+                        binding.atvChitID.setAdapter(arrayAdapter)
+                        binding.atvChitID.threshold = 1
+                        binding.atvChitID.showDropDown()
 
                     }
                 }
             }
         }
 
-        binding.atvName.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
+        binding.atvChitID.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
             for (i in 0 until customerName.size) {
                 try {
-                    if (binding.atvName.text.toString() == customerName[i]) {
+                    if (binding.atvChitID.text.toString() == customerName[i]) {
                         customerNameId = customerValues[i]
                         customerChitIdString = customerChitId[i]
 
                         balance()
 
-                        binding.atvChitID.setText(customerChitIdString)
+                        binding.atvName.setText(customerChitIdString)
+                        binding.atvChitID.dismissDropDown()
 
                         Log.i("TAG", "forsalessss:$id")
                     }
@@ -315,6 +389,7 @@ class ReceiptEntryFragment : Fragment() {
                     e.printStackTrace()
                 }
             }
+
         }
     }
 
@@ -324,7 +399,8 @@ class ReceiptEntryFragment : Fragment() {
                 "2",
                 "4",
                 mainPreference.getCid().first(),
-                customerNameId,
+                customerChitIdString,
+                binding.atvChitID.text.toString()
             )
         }
         getBalance()
@@ -343,15 +419,22 @@ class ReceiptEntryFragment : Fragment() {
                     }
 
                     is Resources.Success -> {
+                        binding.atvChitID.dismissDropDown()
+
                         Log.i("TAG", "getSuccessBalance:${it.data}")
 
                         for (i in it.data!!) {
                             binding.atvBalance.setText(i.balance)
+
+                            for (j in i.rate) {
+
+                                purity = j.purity
+
+                            }
                         }
                     }
                 }
             }
         }
     }
-
 }

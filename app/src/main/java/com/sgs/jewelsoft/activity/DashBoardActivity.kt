@@ -6,12 +6,15 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,18 +32,16 @@ import com.sgs.jewelsoft.MVVM.JewelSoftViewModel
 import com.sgs.jewelsoft.MainPreference
 import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.databinding.ActivityDashBoardBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class DashBoardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashBoardBinding
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var navigationView: NavigationView
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var jewelSoftVM: JewelSoftViewModel
     private lateinit var mainPreference: MainPreference
-    private var pendingNotifications = 0
     private lateinit var myReceiver: MyReceiver
     private var hasLocationPermission = false
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -50,7 +51,18 @@ class DashBoardActivity : AppCompatActivity() {
         binding = ActivityDashBoardBinding.inflate(layoutInflater)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         setContentView(binding.root)
-
+        mainPreference = MainPreference(this)
+        val headerView = binding.navigationView.getHeaderView(0)
+        val headerNameTextView = headerView.findViewById<TextView>(R.id.tvName)
+        val headerDetailsTextView = headerView.findViewById<TextView>(R.id.tvDetails)
+        lifecycleScope.launch {
+            val name = mainPreference.getUserName().first()
+            headerNameTextView.text = name
+        }
+        lifecycleScope.launch {
+            val phone = mainPreference.getPhoneMobileNo().first()
+            headerDetailsTextView.text = phone
+        }
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.navController

@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@color/background"
         android:orientation="vertical">
 
 
@@ -15,6 +16,7 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
             android:text="Name"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -25,6 +27,7 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
+            android:fontFamily="@font/poppins_regular"
             android:inputType="text"
             android:maxLines="1"
             android:paddingStart="10dp"
@@ -35,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="DOB"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -46,6 +50,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
             android:focusable="false"
+            android:fontFamily="@font/poppins_regular"
             android:inputType="date"
             android:maxLines="1"
             android:paddingStart="10dp"
@@ -56,6 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Mobile Number"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -66,7 +72,9 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
+            android:fontFamily="@font/poppins_regular"
             android:inputType="phone"
+            android:maxLength="10"
             android:maxLines="1"
             android:paddingStart="10dp"
             android:singleLine="true" />
@@ -76,6 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Anniversary Date"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -87,6 +96,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
             android:focusable="false"
+            android:fontFamily="@font/poppins_regular"
             android:maxLines="1"
             android:paddingStart="10dp"
             android:singleLine="true" />
@@ -96,6 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Email"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -106,15 +117,46 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
+            android:fontFamily="@font/poppins_regular"
             android:maxLines="1"
             android:paddingStart="10dp"
             android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/tvSheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Scheme"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/atvSchmeType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:paddingStart="15dp"
+                android:paddingTop="16dp"
+                android:background="@drawable/bg_edittext"
+                android:paddingBottom="16dp"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvPanNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Pan Number"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -125,8 +167,10 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
+            android:fontFamily="@font/poppins_regular"
             android:inputType="text"
             android:maxLines="1"
+            android:maxLength="10"
             android:paddingStart="10dp"
             android:singleLine="true" />
 
@@ -135,6 +179,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Aadhar Number"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -145,7 +190,9 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
+            android:fontFamily="@font/poppins_regular"
             android:inputType="number"
+            android:maxLength="12"
             android:maxLines="1"
             android:paddingStart="10dp"
             android:singleLine="true" />
@@ -155,6 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Present Address"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -162,10 +210,11 @@
         <EditText
             android:id="@+id/etPresentAddress"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="65dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
-            android:inputType="text"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="3"
             android:paddingStart="10dp" />
 
         <TextView
@@ -173,6 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="Permanent Address"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -180,11 +230,18 @@
         <EditText
             android:id="@+id/etPrementAddress"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="65dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
-            android:inputType="text"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="3"
             android:paddingStart="10dp" />
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/progress"/>
 
         <Button
             android:id="@+id/btnSave"
@@ -194,6 +251,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="40dp"
             android:background="@drawable/bg_curve"
+            android:fontFamily="@font/poppins_regular"
             android:text="Save"
             android:textAllCaps="false" />
     </LinearLayout>

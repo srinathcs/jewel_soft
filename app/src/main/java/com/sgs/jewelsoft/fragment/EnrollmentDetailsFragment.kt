@@ -13,64 +13,74 @@ import com.sgs.jewelsoft.MVVM.JewelSoftRepository
 import com.sgs.jewelsoft.MVVM.JewelSoftViewModel
 import com.sgs.jewelsoft.MVVM.JewelViewModelFactory
 import com.sgs.jewelsoft.MainPreference
-import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.Resources
-import com.sgs.jewelsoft.adapter.ReceiptViewAdapter
-import com.sgs.jewelsoft.databinding.FragmentViewReceiptBinding
-import kotlinx.coroutines.flow.collect
+import com.sgs.jewelsoft.adapter.EnrollmentViewAdapter
+import com.sgs.jewelsoft.databinding.FragmentEnrollmentDetailsBinding
 import kotlinx.coroutines.flow.first
 
-class ViewReceiptFragment : Fragment() {
-    private lateinit var binding: FragmentViewReceiptBinding
-    private lateinit var jewelSoftVM: JewelSoftViewModel
+class EnrollmentDetailsFragment : Fragment() {
+    private lateinit var binding: FragmentEnrollmentDetailsBinding
     private lateinit var mainPreference: MainPreference
-    private lateinit var myadapter: ReceiptViewAdapter
+    private lateinit var myadapter: EnrollmentViewAdapter
+    private var chit = ""
+
+    private val jewelSoftVM: JewelSoftViewModel by lazy {
+        val repos = JewelSoftRepository()
+        val factory = JewelViewModelFactory(repos)
+        ViewModelProvider(this, factory)[JewelSoftViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentViewReceiptBinding.inflate(inflater, container, false)
+        binding = FragmentEnrollmentDetailsBinding.inflate(inflater, container, false)
         mainPreference = MainPreference(requireContext())
-        viewReceipt()
-        val repos = JewelSoftRepository()
-        val factory = JewelViewModelFactory(repos)
-        jewelSoftVM = ViewModelProvider(this, factory)[JewelSoftViewModel::class.java]
+
+        chit = requireArguments().getString("chit")!!
+
+        viewEnrollment()
+
+
+
         return binding.root
     }
 
-    private fun viewReceipt() {
+    private fun viewEnrollment() {
         lifecycleScope.launchWhenStarted {
-            jewelSoftVM.viewReceipt(
-                "6",
-                mainPreference.getCid().first()
+            jewelSoftVM.enrollmentShow(
+                "8",
+                "3",
+                mainPreference.getCid().first(),
+                chit
             )
         }
-        stateViewReceipt()
+        stateView()
     }
 
-    private fun stateViewReceipt() {
+    private fun stateView() {
         lifecycleScope.launchWhenStarted {
-            jewelSoftVM.viewReceiptShow.collect {
+            jewelSoftVM.enrollmentShowTwoFlow.collect {
                 when (it) {
                     is Resources.Loading -> {
 
                     }
 
                     is Resources.Error -> {
+                        Log.i("TAG", "stateView:${it.message} ")
 
                     }
 
                     is Resources.Success -> {
-                        Log.i("TAG", "stateViewReceipt:${it.data} ")
-                        myadapter = ReceiptViewAdapter(requireContext())
+                        Log.i("TAG", "stateView:${it.data}")
+                        myadapter = EnrollmentViewAdapter(requireContext())
                         binding.rvView.adapter = myadapter
                         binding.rvView.layoutManager = LinearLayoutManager(requireContext())
                         myadapter.differ.submitList(it.data)
-
                     }
                 }
             }
         }
     }
+
 }

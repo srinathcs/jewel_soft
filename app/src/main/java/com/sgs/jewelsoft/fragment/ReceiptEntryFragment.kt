@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.sgs.jewelsoft.MVVM.JewelSoftRepository
 import com.sgs.jewelsoft.MVVM.JewelSoftViewModel
 import com.sgs.jewelsoft.MVVM.JewelViewModelFactory
@@ -19,9 +20,11 @@ import com.sgs.jewelsoft.MainPreference
 import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.databinding.FragmentRecepitEntryBinding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -31,7 +34,8 @@ class ReceiptEntryFragment : Fragment() {
     private lateinit var mainPreference: MainPreference
     private var payId = ""
     private var accId = ""
-    private var receiptId = ""
+
+    private var receiptId = "2"
     private var paymentType: MutableList<String> = mutableListOf()
     private var paymentList: MutableList<String> = mutableListOf()
     private var nameList: MutableList<String> = mutableListOf()
@@ -42,9 +46,11 @@ class ReceiptEntryFragment : Fragment() {
 
     private var customerNameId = ""
     private var customerChitIdString = ""
+    private var values = ""
     private var customerName: MutableList<String> = mutableListOf()
     private var customerValues: MutableList<String> = mutableListOf()
     private var customerChitId: MutableList<String> = mutableListOf()
+    private var customerChitName: MutableList<String> = mutableListOf()
 
     private var currentDate = ""
     private var purity = ""
@@ -61,10 +67,14 @@ class ReceiptEntryFragment : Fragment() {
         currentDate = simpleDateFormat.format(currentCalender.time)
         binding.tvDate.text = currentDate
 
+        binding.atvReceiptType.setText("Paid Receipt")
+
         receiptType()
         paymentType()
         accountType()
         cusName()
+
+
         binding.btnSave.setOnClickListener {
             saveData()
         }
@@ -76,25 +86,57 @@ class ReceiptEntryFragment : Fragment() {
     }
 
     private fun saveData() {
-        lifecycleScope.launchWhenStarted {
-            jewelSoftVM.saveReceipt(
-                "3",
-                mainPreference.getCid().first(),
-                mainPreference.getUserId().first(),
-                currentDate,
-                binding.atvName.text.toString(),
-                customerNameId,
-                binding.atvChitID.text.toString(),
-                binding.atvBalance.text.toString(),
-                payId,
-                binding.etRemark.text.toString(),
-                accId,
-                "",
-                purity,
-                binding.etAmount.text.toString()
-            )
+        when {
+
+            binding.atvChitID.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select the chit Id", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.etAmount.text!!.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Enter the amount", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.atvReceiptType.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select the Receipt Type", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            binding.atvPaymentType.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select the Payment Type", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            binding.atvAccount.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select the Account Type", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else -> {
+                lifecycleScope.launchWhenStarted {
+                    jewelSoftVM.saveReceipt(
+                        "3",
+                        mainPreference.getCid().first(),
+                        mainPreference.getUserId().first(),
+                        currentDate,
+                        customerChitIdString ,
+                        values,
+                        customerNameId,
+                        binding.atvBalance.text.toString(),
+                        payId,
+                        binding.etRemark.text.toString(),
+                        accId,
+                        "",
+                        purity,
+                        binding.etAmount.text.toString(),
+                        receiptId
+                    )
+                }
+                Log.i("TAG", "saveData:${receiptId}")
+            }
+
         }
         saveRecepit()
+
     }
 
     private fun saveRecepit() {
@@ -102,14 +144,25 @@ class ReceiptEntryFragment : Fragment() {
             jewelSoftVM.saveReceiptFlow.collect {
                 when (it) {
                     is Resources.Loading -> {
-
+                        binding.btnSave.visibility = View.GONE
+                        binding.progress.visibility = View.VISIBLE
                     }
 
                     is Resources.Error -> {
                         Log.i("TAG", "saveErrorRecepit:${it.message.toString()}")
+                        Toast.makeText(requireContext(), "Check Internet", Toast.LENGTH_SHORT)
+                            .show()
+                        binding.btnSave.visibility = View.GONE
+                        binding.progress.visibility = View.VISIBLE
+                        delay(1000)
+                        binding.btnSave.visibility = View.VISIBLE
+                        binding.progress.visibility = View.GONE
+
                     }
 
                     is Resources.Success -> {
+                        binding.btnSave.visibility = View.VISIBLE
+                        binding.progress.visibility = View.GONE
                         Log.i("TAG", "validationSuccess: ${it.data}")
                         if (it.data!!.error == false) {
                             binding.atvName.setText("")
@@ -125,6 +178,7 @@ class ReceiptEntryFragment : Fragment() {
                                 "Data Added Successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            findNavController().navigate(R.id.tickFragment)
                         } else {
                             Toast.makeText(
                                 requireContext(), "Data is not added", Toast.LENGTH_SHORT
@@ -344,23 +398,25 @@ class ReceiptEntryFragment : Fragment() {
                     }
 
                     is Resources.Error -> {
-                        Log.i("TAG", "setVehicleError: ${it.data}")
+
                     }
 
                     is Resources.Success -> {
-
+                        Log.i("TAG", "setVehicleError: ${it.data}")
                         customerName.clear()
-                        customerValues.clear()
+                        customerChitName.clear()
                         customerChitId.clear()
+                        customerValues.clear()
 
                         for (i in it.data!!) {
                             customerName.add(i.chit_id)
-                            customerValues.add(i.id)
                             customerChitId.add(i.label)
+                            customerChitName.add(i.lname)
+                            customerValues.add(i.id)
                         }
                         val arrayAdapter = ArrayAdapter(
                             requireContext(),
-                            R.layout.complete_text_view, customerName
+                            R.layout.complete_text_view, customerChitId
                         )
                         binding.atvChitID.setAdapter(arrayAdapter)
                         binding.atvChitID.threshold = 1
@@ -372,11 +428,13 @@ class ReceiptEntryFragment : Fragment() {
         }
 
         binding.atvChitID.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
-            for (i in 0 until customerName.size) {
+            for (i in 0 until customerChitId.size) {
                 try {
-                    if (binding.atvChitID.text.toString() == customerName[i]) {
-                        customerNameId = customerValues[i]
-                        customerChitIdString = customerChitId[i]
+                    if (binding.atvChitID.text.toString() == customerChitId[i]) {
+                        customerNameId = customerName[i]
+                        customerChitIdString = customerChitName[i]
+                        values = customerValues[i]
+
 
                         balance()
 
@@ -400,7 +458,7 @@ class ReceiptEntryFragment : Fragment() {
                 "4",
                 mainPreference.getCid().first(),
                 customerChitIdString,
-                binding.atvChitID.text.toString()
+                customerNameId
             )
         }
         getBalance()
@@ -423,15 +481,11 @@ class ReceiptEntryFragment : Fragment() {
 
                         Log.i("TAG", "getSuccessBalance:${it.data}")
 
-                        for (i in it.data!!) {
-                            binding.atvBalance.setText(i.balance)
+                        binding.atvBalance.setText(it.data!!.balance)
+                        val dk = it.data.rate!!.purity
 
-                            for (j in i.rate) {
+                        purity = dk.toString()
 
-                                purity = j.purity
-
-                            }
-                        }
                     }
                 }
             }

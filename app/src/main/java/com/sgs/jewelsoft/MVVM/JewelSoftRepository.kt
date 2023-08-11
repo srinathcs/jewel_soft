@@ -1,12 +1,21 @@
 package com.sgs.jewelsoft.MVVM
 
 import retrofit2.http.Field
+import java.time.Duration
 
 class JewelSoftRepository {
 
     suspend fun login(
-        user: String, password: String, type: String, cid: String
-    ) = Retrofit.api.login(user, password, type, cid)
+        user: String,
+        password: String,
+        type: String,
+        cid: String
+    ) = Retrofit.api.login(
+        user,
+        password,
+        type,
+        cid
+    )
 
     suspend fun success(
         type: String,
@@ -21,7 +30,8 @@ class JewelSoftRepository {
         PermAddress: String,
         email: String,
         pan: String,
-        aadhar: String
+        aadhar: String,
+        sch_type: String
     ) = Retrofit.api.success(
         type,
         cid,
@@ -35,7 +45,8 @@ class JewelSoftRepository {
         PermAddress,
         email,
         pan,
-        aadhar
+        aadhar,
+        sch_type
     )
 
     suspend fun receiptType(
@@ -69,7 +80,7 @@ class JewelSoftRepository {
         cid: String,
         name: String,
         chit: String,
-    ) = Retrofit.api.balance(sub_type, type, cid, name,chit)
+    ) = Retrofit.api.balance(sub_type, type, cid, name, chit)
 
     suspend fun viewReceipt(
         type: String,
@@ -90,6 +101,96 @@ class JewelSoftRepository {
         account: String,
         total_due: String,
         total_metal: String,
-        total:String
-    ) = Retrofit.api.saveData(type,cid, uid, date, lname,name, chit_id, balance, ptype, remark, account, total_due, total_metal,total)
+        total: String,
+        receiptType: String
+    ) = Retrofit.api.saveData(
+        type,
+        cid,
+        uid,
+        date,
+        lname,
+        name,
+        chit_id,
+        balance,
+        ptype,
+        remark,
+        account,
+        total_due,
+        total_metal,
+        total,
+        receiptType
+    )
+
+    suspend fun viewReport(
+        type: String,
+        edate: String,
+        sdate: String,
+        cid: String
+    ) = Retrofit.api.viewReport(type, edate, sdate, cid)
+
+    suspend fun scheme(
+        type: String,
+        sub_type: String,
+        cid: String
+    ) = Retrofit.api.scheme(type, sub_type, cid)
+
+    suspend fun enrollment(
+        type: String,
+        sub_type: String,
+        cid: String,
+    chit_id: String
+    ) = Retrofit.api.enrollment(type, sub_type, cid,chit_id)
+
+    suspend fun enrollmentTwo(
+        type: String,
+        sub_type: String,
+        cid: String,
+        chit: String
+    ) = Retrofit.api.enrollmentTwo(type, sub_type, cid, chit)
+
+    suspend fun enrollmentShow(
+        type: String,
+        sub_type: String,
+        cid: String,
+        chit: String
+    ) = Retrofit.api.enrollmentTwoShow(type, sub_type, cid, chit)
+
+    suspend fun enrollmentName(
+        type: String,
+        cid: String,
+        sub_type: String,
+        name: String
+    ) = Retrofit.api.enrollmentName(type, cid, sub_type,name)
+
+    suspend fun enrollmentScheme(
+        type: String,
+        cid: String,
+        sub_type: String,
+        sch:String,
+        date: String
+    ) = Retrofit.api.enrollmentScheme(type, cid, sub_type, sch,date)
+
+    suspend fun sales(
+        type: String,
+        cid: String,
+        sub_type: String
+    ) = Retrofit.api.sales(type, cid, sub_type)
+
+    suspend fun saveEnrollment(
+        cid: String,
+        uid: String,
+        lname: String,
+        name: String,
+        sch_type: String,
+        date: String,
+        duration: String,
+        dis:String,
+        metal_pr:String,
+        amount:String,
+        mdate:String,
+        total: String,
+        remark: String,
+        sales_man:String,
+        type:String
+    ) = Retrofit.api.saveEnrollment(cid,uid, lname, name, sch_type, date, duration, dis, metal_pr, amount, mdate, total, remark,sales_man,type)
 }

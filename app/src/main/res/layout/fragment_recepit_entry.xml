@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".fragment.ReceiptEntryFragment">
 
     <LinearLayout
@@ -132,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:hint="Account">
+            android:hint="Account Type">
 
             <AutoCompleteTextView
                 android:id="@+id/atvAccount"
@@ -161,12 +162,19 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/progress"/>
+
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_height="50dp"
+           android:layout_marginHorizontal="5dp"
             android:text="Save"
+            android:layout_marginTop="5dp"
             android:textAllCaps="false" />
     </LinearLayout>
 </ScrollView>

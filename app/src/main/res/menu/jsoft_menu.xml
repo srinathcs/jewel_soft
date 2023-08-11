@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/homeFragment"
-        android:title="Dashboard" />
+    <group android:id="@+id/vView">
+        <item
+            android:id="@+id/homeFragment"
+            android:title="Dashboard" />
+    </group>
 
-    <item
-        android:id="@+id/entryReceiptFragment"
-        android:title="Entry Receipt" />
+    <group android:id="@+id/vView2">
+        <item
+            android:id="@+id/entryReceiptFragment"
+            android:title="Entry Receipt" />
+    </group>
+    <group android:id="@+id/vView3">
+        <item
+            android:id="@+id/viewReceiptFragment"
+            android:title="View Receipt" />
+    </group>
+    <group android:id="@+id/vView4">
+        <item
+            android:id="@+id/reportFragment"
+            android:title="Report" />
+    </group>
 
-    <item
-        android:id="@+id/viewReceiptFragment"
-        android:title="View Receipt" />
+    <group android:id="@+id/vView7">
+        <item
+            android:id="@+id/enrollmentFragment"
+            android:title="Customer Report" />
+    </group>
 
-    <item
-        android:id="@+id/reportFragment"
-        android:title="Report" />
+    <group android:id="@+id/vView6">
+        <item
+            android:id="@+id/customerFragment"
+            android:title="New Enrollment" />
+    </group>
+
+    <group android:id="@+id/vView5">
+        <item
+            android:id="@+id/logoutFragment"
+            android:title="Logout" />
+    </group>
 
 </menu>

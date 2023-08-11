@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sgs.jewelsoft.R
-import com.sgs.jewelsoft.databinding.FragmentSettingsBinding
+import com.sgs.jewelsoft.databinding.FragmentDocumentUploadBinding
 
-class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+class DocumentUploadFragment : Fragment() {
+    private lateinit var binding: FragmentDocumentUploadBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+    ): View{
+        binding = FragmentDocumentUploadBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
 }

@@ -13,8 +13,8 @@ import com.sgs.jewelsoft.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private var lt =""
-    private var ln =""
+    private var lt = ""
+    private var ln = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +39,9 @@ class HomeFragment : Fragment() {
         }
         binding.cvViewReceipt.setOnClickListener {
             findNavController().navigate(R.id.viewReceiptFragment)
+        }
+        binding.cvReport.setOnClickListener {
+            findNavController().navigate(R.id.reportFragment)
         }
         return binding.root
     }

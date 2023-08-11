@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.sgs.jewelsoft'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.sgs.jewelsoft"
         minSdk 24
-        targetSdk 34
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -84,5 +84,7 @@ dependencies {
     //current location
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'androidx.lifecycle:lifecycle-service:2.6.1'
+
+    implementation 'com.airbnb.android:lottie:5.2.0'
 
 }

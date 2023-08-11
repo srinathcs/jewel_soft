@@ -6,29 +6,32 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sgs.jewelsoft.MVVM.ViewReceipt
+import com.sgs.jewelsoft.MVVM.Report
 import com.sgs.jewelsoft.databinding.ReceiptViewBinding
+import com.sgs.jewelsoft.databinding.ReportViewBinding
 
-class ReceiptViewAdapter(val context: Context) :
-    RecyclerView.Adapter<ReceiptViewAdapter.ReceiptViewHolder>() {
+class ReportAdapter(val context: Context) :
+    RecyclerView.Adapter<ReportAdapter.ReportViewHolder>() {
 
-    var dashboardListener: ((locationModel: ViewReceipt) -> Unit)? = null
-
+    var dashboardListener: ((locationModel: Report) -> Unit)? = null
 
     override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
-    ): ReceiptViewAdapter.ReceiptViewHolder {
-        return ReceiptViewHolder(
-            ReceiptViewBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+        parent: ViewGroup,
+        viewType: Int
+    ): ReportAdapter.ReportViewHolder {
+        return ReportViewHolder(
+            ReportViewBinding.inflate(
+                LayoutInflater.from(context),
+                parent,
+                false
             )
         )
     }
 
-    override fun onBindViewHolder(holder: ReceiptViewAdapter.ReceiptViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReportAdapter.ReportViewHolder, position: Int) {
         try {
-            val statusModel = differ.currentList[position]
-            holder.setView(statusModel)
+            val reportModel = differ.currentList[position]
+            holder.setView(reportModel)
         } catch (e: NullPointerException) {
             e.printStackTrace()
         }
@@ -38,20 +41,14 @@ class ReceiptViewAdapter(val context: Context) :
         return differ.currentList.size
     }
 
-    inner class ReceiptViewHolder(private var binding: ReceiptViewBinding) :
+    inner class ReportViewHolder(private var binding: ReportViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun setView(view: ViewReceipt) {
+        fun setView(view: Report) {
             binding.tvDate.text = view.date
-            binding.tvAccount.text = view.account
-            binding.tvBalance.text = view.balance
             binding.tvName.text = view.lname
+            binding.tvBalance.text = view.balance
             binding.tvTotal.text = view.total
-            binding.tvPType.text = view.ptype
-            binding.tvRemark.text = view.remark
-            binding.tvChitId.text = view.chit_id
         }
-
         init {
 
             binding.root.setOnClickListener {
@@ -67,18 +64,18 @@ class ReceiptViewAdapter(val context: Context) :
             }
 
         }
-
     }
 
-    private val callback = object : DiffUtil.ItemCallback<ViewReceipt>() {
-        override fun areItemsTheSame(oldItem: ViewReceipt, newItem: ViewReceipt): Boolean {
+    private val callback = object : DiffUtil.ItemCallback<Report>() {
+        override fun areItemsTheSame(oldItem: Report, newItem: Report): Boolean {
             return oldItem.lname == newItem.lname
         }
 
-        override fun areContentsTheSame(oldItem: ViewReceipt, newItem: ViewReceipt): Boolean {
+        override fun areContentsTheSame(oldItem: Report, newItem: Report): Boolean {
             return oldItem == newItem
         }
     }
     val differ = AsyncListDiffer(this, callback)
+
 
 }

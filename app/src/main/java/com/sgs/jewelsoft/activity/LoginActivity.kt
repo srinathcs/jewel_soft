@@ -46,8 +46,6 @@ class LoginActivity : AppCompatActivity() {
 
         mainPreference = MainPreference(this@LoginActivity)
 
-//        requireActivity as fragment , Activity as this
-
         FusedLocationService.latitudeFlow.observe(this) {
             lt = it.latitude.toString()
             ln = it.longitude.toString()
@@ -61,8 +59,8 @@ class LoginActivity : AppCompatActivity() {
         myReceiver = MyReceiver()
 
         binding.btnRegister.setOnClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-            startActivity(intent)
+           /* val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)*/
         }
         binding.btnLogin.setOnClickListener {
             login()
@@ -105,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
                                 mainPreference.saveLogin(true)
 
                                 val role = it.data.role_id
-                                val name = it.data.com.name
+                                val name = it.data.uname
                                 val phone = it.data.com.phone
                                 val cid = it.data.cid
                                 val uid = it.data.uid

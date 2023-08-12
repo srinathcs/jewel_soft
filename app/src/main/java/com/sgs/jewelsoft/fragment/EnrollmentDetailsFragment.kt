@@ -41,8 +41,6 @@ class EnrollmentDetailsFragment : Fragment() {
 
         viewEnrollment()
 
-
-
         return binding.root
     }
 

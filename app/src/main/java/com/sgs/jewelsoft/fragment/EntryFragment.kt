@@ -4,9 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
@@ -21,7 +19,6 @@ import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.databinding.FragmentEntryBinding
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -241,7 +238,7 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
                         binding.btnSave.visibility = View.VISIBLE
 
                         if (it.data!!.error == false) {
-                            if (it.data!!.error_msg == "Customer Save successfully") {
+                            if (it.data.error_msg == "Customer Save successfully") {
                                 binding.etAadharNum.setText("")
                                 binding.etPanNum.setText("")
                                 binding.etEmail.setText("")

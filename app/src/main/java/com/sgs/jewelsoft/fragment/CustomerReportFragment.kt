@@ -27,7 +27,6 @@ import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.activity.DashBoardActivity
 import com.sgs.jewelsoft.databinding.FragmentCustomerReportBinding
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -98,26 +97,64 @@ class CustomerReportFragment : Fragment() {
     }
 
     private fun saveEnrollment() {
-        lifecycleScope.launchWhenStarted {
-            jewelSoftVM.saveEnrollment(
-                mainPreference.getCid().first(),
-                mainPreference.getUserId().first(),
-                binding.atvName.text.toString(),
-                custId,
-                scheme,
-                formattedDate,
-                binding.atvEMI.text.toString(),
-                binding.atvFreeEMI.text.toString(),
-                binding.atvPurity.text.toString(),
-                binding.atvAmount.text.toString(),
-                binding.atvEDate.text.toString(),
-                binding.atvTotalAmount.text.toString(),
-                binding.atvRemark.text.toString(),
-                sales,
-                "10"
-            )
+        when {
+            binding.atvName.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Enter a name", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.atvSchmeType.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select Scheme Type", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.atvSDate.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select Date", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            binding.atvEDate.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select Maturity Date", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            binding.atvAmount.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Enter the Amount", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            binding.atvTotalAmount.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Enter the Total Amount", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            binding.atvSales.text.isNullOrEmpty() -> {
+                Toast.makeText(requireContext(), "Select Sales Man", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else -> {
+                lifecycleScope.launchWhenStarted {
+                    jewelSoftVM.saveEnrollment(
+                        mainPreference.getCid().first(),
+                        mainPreference.getUserId().first(),
+                        binding.atvName.text.toString(),
+                        custId,
+                        scheme,
+                        formattedDate,
+                        binding.atvEMI.text.toString(),
+                        binding.atvFreeEMI.text.toString(),
+                        binding.atvPurity.text.toString(),
+                        binding.atvAmount.text.toString(),
+                        binding.atvEDate.text.toString(),
+                        binding.atvTotalAmount.text.toString(),
+                        binding.atvRemark.text.toString(),
+                        sales,
+                        "10"
+                    )
+                    saveData()
+                }
+
+            }
         }
-        saveData()
     }
 
     private fun saveData() {
@@ -131,7 +168,8 @@ class CustomerReportFragment : Fragment() {
 
                     is Resources.Error -> {
                         Log.i("TAG", "validate_for_error2: ${it.message.toString()}")
-                        Toast.makeText(requireContext(), "Check Internet", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Check Internet", Toast.LENGTH_SHORT)
+                            .show()
                         binding.progress.visibility = View.VISIBLE
                         binding.btnSave.visibility = View.GONE
                         delay(1000)
@@ -159,9 +197,13 @@ class CustomerReportFragment : Fragment() {
                             binding.atvRemark.setText("")
                             binding.atvSales.setText("")
 
-                            Toast.makeText(requireContext(),"Save Successfully",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Save Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                            val int = Intent(requireActivity(),DashBoardActivity::class.java)
+                            val int = Intent(requireActivity(), DashBoardActivity::class.java)
                             startActivity(int)
                             requireActivity().finish()
 

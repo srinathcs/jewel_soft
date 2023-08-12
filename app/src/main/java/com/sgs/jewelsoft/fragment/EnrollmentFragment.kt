@@ -20,11 +20,8 @@ import com.sgs.jewelsoft.MainPreference
 import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.adapter.EnrollmentAdapter
-import com.sgs.jewelsoft.adapter.ReceiptViewAdapter
 import com.sgs.jewelsoft.databinding.FragmentEnrollmentBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class EnrollmentFragment : Fragment() {
     private lateinit var binding: FragmentEnrollmentBinding

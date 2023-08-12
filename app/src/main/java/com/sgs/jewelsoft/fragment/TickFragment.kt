@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.databinding.FragmentTickBinding
 
-
 class TickFragment : Fragment() {
     private lateinit var binding: FragmentTickBinding
 

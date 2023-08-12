@@ -1,14 +1,11 @@
 package com.sgs.jewelsoft.MVVM
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgs.jewelsoft.Resources
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.http.Field
-import java.security.cert.CertPathValidatorException.Reason
 
 class JewelSoftViewModel(private val jewelSoftRepo: JewelSoftRepository) : ViewModel() {
     private val testLogin = MutableStateFlow<Resources<Login>>(Resources.Loading())

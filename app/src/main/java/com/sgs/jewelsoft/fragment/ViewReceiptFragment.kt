@@ -13,11 +13,9 @@ import com.sgs.jewelsoft.MVVM.JewelSoftRepository
 import com.sgs.jewelsoft.MVVM.JewelSoftViewModel
 import com.sgs.jewelsoft.MVVM.JewelViewModelFactory
 import com.sgs.jewelsoft.MainPreference
-import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.adapter.ReceiptViewAdapter
 import com.sgs.jewelsoft.databinding.FragmentViewReceiptBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 
 class ViewReceiptFragment : Fragment() {

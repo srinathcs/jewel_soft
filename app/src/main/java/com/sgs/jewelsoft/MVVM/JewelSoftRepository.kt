@@ -1,8 +1,5 @@
 package com.sgs.jewelsoft.MVVM
 
-import retrofit2.http.Field
-import java.time.Duration
-
 class JewelSoftRepository {
 
     suspend fun login(

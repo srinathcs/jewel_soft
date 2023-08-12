@@ -21,10 +21,7 @@ import com.sgs.jewelsoft.R
 import com.sgs.jewelsoft.Resources
 import com.sgs.jewelsoft.databinding.FragmentRecepitEntryBinding
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 

@@ -57,6 +57,12 @@ class SplashScreenActivity : AppCompatActivity() {
                             finish()
                         }
 
+                        "2"->{
+                            intent = Intent ( this@SplashScreenActivity, DashBoardActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+
                     }
 
                 }

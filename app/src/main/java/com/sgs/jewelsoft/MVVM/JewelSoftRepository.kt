@@ -69,7 +69,7 @@ class JewelSoftRepository {
         type: String,
         cid: String,
         name: String
-    ) = Retrofit.api.AutoFillName(sub_type, type, cid, name)
+    ) = Retrofit.api.autoFillName(sub_type, type, cid, name)
 
     suspend fun balance(
         sub_type: String,
@@ -154,10 +154,10 @@ class JewelSoftRepository {
 
     suspend fun enrollmentName(
         type: String,
-        cid: String,
         sub_type: String,
+        cid: String,
         name: String
-    ) = Retrofit.api.enrollmentName(type, cid, sub_type,name)
+    ) = Retrofit.api.enrollmentName(type, sub_type, cid,name)
 
     suspend fun enrollmentScheme(
         type: String,

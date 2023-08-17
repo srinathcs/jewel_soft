@@ -10,6 +10,7 @@
         android:name="com.sgs.jewelsoft.fragment.HomeFragment"
         android:label="Dash board"
         tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/entryFragment"
         android:name="com.sgs.jewelsoft.fragment.EntryFragment"
@@ -29,6 +30,7 @@
         android:id="@+id/reportFragment"
         android:name="com.sgs.jewelsoft.fragment.ReportFragment"
         android:label="Report" />
+
     <fragment
         android:id="@+id/logoutFragment"
         android:name="com.sgs.jewelsoft.fragment.logout.Logout"
@@ -40,24 +42,29 @@
         android:name="com.sgs.jewelsoft.fragment.EnrollmentFragment"
         android:label="Customer Report"
         tools:layout="@layout/fragment_enrollment" />
+
     <fragment
         android:id="@+id/enrollmentDetailsFragment"
         android:name="com.sgs.jewelsoft.fragment.EnrollmentDetailsFragment"
         android:label="Enrollment Details"
         tools:layout="@layout/fragment_enrollment_details" />
+
     <fragment
         android:id="@+id/tickFragment"
         android:name="com.sgs.jewelsoft.fragment.TickFragment"
         android:label="Receipt Entry"
         tools:layout="@layout/fragment_tick" />
+
     <fragment
         android:id="@+id/customerFragment"
         android:name="com.sgs.jewelsoft.fragment.CustomerReportFragment"
         android:label="Enrollment"
         tools:layout="@layout/fragment_customer_report" />
+
     <fragment
         android:id="@+id/documentUploadFragment"
         android:name="com.sgs.jewelsoft.fragment.DocumentUploadFragment"
         android:label="Document Upload"
         tools:layout="@layout/fragment_document_upload" />
+
 </navigation>

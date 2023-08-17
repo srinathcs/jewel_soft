@@ -1,12 +1,9 @@
 package com.sgs.jewelsoft.MVVM
 
-import android.system.StructTimespec
+
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import java.time.Duration
-import java.time.temporal.TemporalAmount
-import java.util.Date
 
 interface JewelSoft {
 
@@ -64,7 +61,7 @@ interface JewelSoft {
 
     @FormUrlEncoded
     @POST("jewel_index.php")
-    suspend fun AutoFillName(
+    suspend fun autoFillName(
         @Field("sub_type") sub_type: String,
         @Field("type") type: String,
         @Field("cid") cid: String,
@@ -156,8 +153,8 @@ interface JewelSoft {
     @POST("jewel_index.php")
     suspend fun enrollmentName(
         @Field("type") type: String,
-        @Field("cid") cid: String,
-        @Field("sub_type") sub_type: String,
+        @Field("sub_type") cid: String,
+        @Field("cid") sub_type: String,
         @Field("name") name: String
     ): List<EnrollmentName>
 

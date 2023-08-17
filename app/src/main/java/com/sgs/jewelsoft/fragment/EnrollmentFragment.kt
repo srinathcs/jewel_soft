@@ -43,7 +43,6 @@ class EnrollmentFragment : Fragment() {
         mainPreference = MainPreference(requireContext())
         binding = FragmentEnrollmentBinding.inflate(inflater, container, false)
         enrollment()
-
         binding.btnSearch.setOnClickListener {
             binding.atvChitID.dismissDropDown()
             viewDetail()
@@ -94,7 +93,6 @@ class EnrollmentFragment : Fragment() {
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-
                     }
                 }
             }
@@ -105,7 +103,7 @@ class EnrollmentFragment : Fragment() {
         binding.atvChitID.doOnTextChanged { text, _, _, _ ->
             lifecycleScope.launchWhenStarted {
                 jewelSoftVM.enrollment(
-                    "8",
+                    "4",
                     "1",
                     mainPreference.getCid().first(),
                     text.toString()
@@ -129,7 +127,7 @@ class EnrollmentFragment : Fragment() {
                     }
 
                     is Resources.Success -> {
-                        Log.i("TAG", "stateEnrollment:${it.data}")
+                        Log.i("TAG", "stateEnrollmentSuccess:${it.data}")
                         try {
                             chitList.clear()
                             idList.clear()

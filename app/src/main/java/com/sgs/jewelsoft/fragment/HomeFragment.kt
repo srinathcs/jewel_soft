@@ -17,9 +17,8 @@ class HomeFragment : Fragment() {
     private var ln = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         FusedLocationService.latitudeFlow.observe(requireActivity()) {
@@ -42,6 +41,9 @@ class HomeFragment : Fragment() {
         }
         binding.cvReport.setOnClickListener {
             findNavController().navigate(R.id.reportFragment)
+        }
+        binding.cvViewEnroll.setOnClickListener {
+            findNavController().navigate(R.id.customerFragment)
         }
         return binding.root
     }

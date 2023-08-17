@@ -49,8 +49,6 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
         val formattedDate = dateFormat.format(currentDate.time)
         binding.etAnniversary.setText(formattedDate)
 
-
-
         binding.etAnniversary.setOnClickListener {
             showAnniversaryPickerDialog()
         }
@@ -132,22 +130,22 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
                     .show()
             }
 
-            binding.etEmail.text.isNullOrEmpty() -> {
+           /* binding.etEmail.text.isNullOrEmpty() -> {
                 Toast.makeText(requireContext(), "Enter the Email", Toast.LENGTH_SHORT).show()
-            }
+            }*/
 
             binding.atvSchmeType.text.isNullOrEmpty() -> {
                 Toast.makeText(requireContext(), "Select the Scheme", Toast.LENGTH_SHORT).show()
             }
 
-            binding.etPanNum.text.isNullOrEmpty() -> {
+           /* binding.etPanNum.text.isNullOrEmpty() -> {
                 Toast.makeText(requireContext(), "Enter the Pan Number", Toast.LENGTH_SHORT).show()
             }
 
             binding.etAadharNum.text.isNullOrEmpty() -> {
                 Toast.makeText(requireContext(), "Enter the Aadhar Number", Toast.LENGTH_SHORT)
                     .show()
-            }
+            }*/
 
             binding.etPresentAddress.text.isNullOrEmpty() -> {
                 Toast.makeText(requireContext(), "Enter the Present Address", Toast.LENGTH_SHORT)
@@ -168,23 +166,23 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
                 return
             }
 
-            (binding.etPanNum.text.length < 10) -> {
+            /*(binding.etPanNum.text.length < 10) -> {
                 Toast.makeText(
                     requireContext(),
                     "PAN card should have at least 10 digits",
                     Toast.LENGTH_SHORT
                 ).show()
                 return
-            }
+            }*/
 
-            (binding.etAadharNum.text.length < 12) -> {
+           /* (binding.etAadharNum.text.length < 12) -> {
                 Toast.makeText(
                     requireContext(),
                     "Aadhar card should have at least 12 digits",
                     Toast.LENGTH_SHORT
                 ).show()
                 return
-            }
+            }*/
 
 
             else -> {

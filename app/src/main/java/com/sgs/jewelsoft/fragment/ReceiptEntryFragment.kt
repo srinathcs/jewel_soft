@@ -115,7 +115,7 @@ class ReceiptEntryFragment : Fragment() {
                         mainPreference.getCid().first(),
                         mainPreference.getUserId().first(),
                         currentDate,
-                        customerChitIdString ,
+                        customerChitIdString,
                         values,
                         customerNameId,
                         binding.atvBalance.text.toString(),
@@ -130,10 +130,8 @@ class ReceiptEntryFragment : Fragment() {
                 }
                 Log.i("TAG", "saveData:${receiptId}")
             }
-
         }
         saveRecepit()
-
     }
 
     private fun saveRecepit() {
@@ -147,8 +145,7 @@ class ReceiptEntryFragment : Fragment() {
 
                     is Resources.Error -> {
                         Log.i("TAG", "saveErrorRecepit:${it.message.toString()}")
-                        Toast.makeText(requireContext(), "Check Internet", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(requireContext(), "Check Internet", Toast.LENGTH_SHORT).show()
                         binding.btnSave.visibility = View.GONE
                         binding.progress.visibility = View.VISIBLE
                         delay(1000)

@@ -322,7 +322,7 @@ class CustomerReportFragment : Fragment() {
                     }
 
                     is Resources.Error -> {
-
+                        Log.i("TAG", "stateScheme:${it.message}")
                     }
 
                     is Resources.Success -> {
@@ -345,7 +345,6 @@ class CustomerReportFragment : Fragment() {
                             e.printStackTrace()
                         }
                     }
-
                 }
             }
         }
@@ -415,8 +414,8 @@ class CustomerReportFragment : Fragment() {
             lifecycleScope.launchWhenStarted {
                 jewelSoftVM.enrollmentName(
                     "11",
-                    mainPreference.getCid().first(),
                     "1",
+                    mainPreference.getCid().first(),
                     text.toString()
                 )
             }
@@ -437,6 +436,7 @@ class CustomerReportFragment : Fragment() {
                     }
 
                     is Resources.Success -> {
+                        Log.i("TAG", "autoFillName: ${it.data}")
                         customerName.clear()
                         customerId.clear()
                         customerLabel.clear()

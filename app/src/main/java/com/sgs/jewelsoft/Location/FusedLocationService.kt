@@ -1,6 +1,5 @@
 package com.sgs.jewelsoft.Location
 
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.location.Location
@@ -12,7 +11,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import com.sgs.jewelsoft.Location.Constant.ACTION_START_FUSED_SERVICE
 import com.sgs.jewelsoft.Location.Constant.ACTION_STOP_FUSED_SERVICE
-
 
 class FusedLocationService : LifecycleService() {
 

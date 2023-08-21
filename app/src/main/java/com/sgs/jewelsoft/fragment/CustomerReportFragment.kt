@@ -64,7 +64,7 @@ class CustomerReportFragment : Fragment() {
         binding = FragmentCustomerReportBinding.inflate(inflater, container, false)
 
         val currentDate = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         formattedDate = dateFormat.format(currentDate.time)
         binding.atvSDate.setText(formattedDate)
 
